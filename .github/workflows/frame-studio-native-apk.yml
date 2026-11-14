@@ -40,6 +40,7 @@ jobs:
           path: native/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
       - name: Publish directly installable APK in Releases
+        id: publish
         if: steps.compile.outcome == 'success'
         continue-on-error: true
         env:
@@ -61,6 +62,9 @@ jobs:
           {
             echo "Commit: $GITHUB_SHA"
             echo "Compile step: ${{ steps.compile.outcome }}"
+            echo "Publish step: ${{ steps.publish.outcome }}"
+            echo "Run: https://github.com/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID"
+            echo "Direct APK: https://github.com/$GITHUB_REPOSITORY/releases/download/native-debug-latest/FRAME-STUDIO.apk"
             if [ -f native-build.log ]; then
               grep -E -i '(^e: |error:|unresolved reference|failed|what went wrong|could not|BUILD SUCCESSFUL|BUILD FAILED|exception)' native-build.log | tail -n 110 || true
               echo "--- Last 35 lines ---"
