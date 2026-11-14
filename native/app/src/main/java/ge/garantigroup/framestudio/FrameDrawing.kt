@@ -7,6 +7,7 @@ import android.graphics.Paint
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTransformGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -168,11 +169,16 @@ fun FrameDrawing(
     tool: String,
     onCellTap: (String) -> Unit,
     onCellLongPress: (String) -> Unit,
-    onDimension: (DimensionHit) -> Unit
+    onDimension: (DimensionHit) -> Unit,
+    onImpostDragStart: () -> Unit,
+    onImpostDrag: (ImpostBoundary, Double) -> Double?
 ) {
     var zoom by remember { mutableFloatStateOf(1f) }
     var pan by remember { mutableStateOf(Offset.Zero) }
     val geo = geometryFor(frame)
+    val latestFrame by rememberUpdatedState(frame)
+    val latestDragStart by rememberUpdatedState(onImpostDragStart)
+    val latestDrag by rememberUpdatedState(onImpostDrag)
     Column(Modifier.fillMaxWidth().background(Color(0xFFEEF3FA), RoundedCornerShape(14.dp)).padding(8.dp)) {
         Canvas(
             Modifier.fillMaxWidth().heightIn(min=310.dp).height(340.dp)
@@ -211,6 +217,54 @@ fun FrameDrawing(
                                     y>=it.y && y<=it.y+it.h }?.let { onCellLongPress(it.id) }
                             }
                         }
+                    )
+                }
+                .pointerInput(tool) {
+                    var active: ImpostBoundary? = null
+                    fun virtual(pos: Offset): Offset {
+                        val px=pos.x / size.width * 800f
+                        val py=pos.y / size.height * 600f
+                        val center=Offset(400f,300f)
+                        return (Offset(px,py)-center)/zoom+center-pan
+                    }
+                    detectDragGestures(
+                        onDragStart = { p ->
+                            active=null
+                            if (tool=="select") {
+                                val b=geometryFor(latestFrame).box
+                                val v=virtual(p)
+                                active=impostBoundaries(latestFrame).firstOrNull { d ->
+                                    if(d.axis=="vertical") {
+                                        val lineX=b.x+(d.pos*b.w).toFloat()
+                                        val top=b.y+(d.lo*b.h).toFloat()
+                                        val bottom=b.y+(d.hi*b.h).toFloat()
+                                        kotlin.math.abs(v.x-lineX)<17f && v.y in top..bottom
+                                    } else {
+                                        val lineY=b.y+(d.pos*b.h).toFloat()
+                                        val left=b.x+(d.lo*b.w).toFloat()
+                                        val right=b.x+(d.hi*b.w).toFloat()
+                                        kotlin.math.abs(v.y-lineY)<17f && v.x in left..right
+                                    }
+                                }
+                                if(active!=null)latestDragStart()
+                            }
+                        },
+                        onDrag = { change, drag ->
+                            val d=active
+                            if(d!=null) {
+                                change.consume()
+                                val b=geometryFor(latestFrame).box
+                                val displacement=if(d.axis=="vertical") {
+                                    drag.x / size.width * 800f / zoom / b.w
+                                } else {
+                                    drag.y / size.height * 600f / zoom / b.h
+                                }
+                                val newPos=latestDrag(d,d.pos+displacement)
+                                if(newPos!=null)active=d.copy(pos=newPos)
+                            }
+                        },
+                        onDragCancel = { active=null },
+                        onDragEnd = { active=null }
                     )
                 }
                 .pointerInput(Unit) {
