@@ -266,7 +266,13 @@ private fun FrameStudioScreen() {
                                 }
                             },
                             onCellLongPress={ id-> selected=id;openingDialog=true },
-                            onDimension={ hit->editHit=hit;editText=hit.old.toString() }
+                            onDimension={ hit->editHit=hit;editText=hit.old.toString() },
+                            onImpostDragStart={undo=(undo+frame).takeLast(40)},
+                            onImpostDrag={ d,pos ->
+                                val moved=moveImpost(frame,d,pos)
+                                if(moved!=null) updateFrame(moved.construction)
+                                moved?.position
+                            }
                         )
                         Spacer(Modifier.height(12.dp))
                         Text("აირჩიე ვერტიკალური ან ჰორიზონტალური იმპოსტი და დააჭირე უჯრას — იმპოსტი შუაში ჩაისმება. გაღების ტიპისთვის უჯრას დიდხანს დააჭირე. ლურჯ ზომებზე შეხებით შეცვალე ზომები პირდაპირ ნახაზზე.",
