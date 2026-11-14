@@ -39,6 +39,20 @@ jobs:
           name: FRAME-STUDIO-Native-APK
           path: native/app/build/outputs/apk/debug/app-debug.apk
           if-no-files-found: error
+      - name: Publish directly installable APK in Releases
+        if: steps.compile.outcome == 'success'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          if ! gh release view native-debug-latest >/dev/null 2>&1; then
+            gh release create native-debug-latest --target "$GITHUB_SHA" \
+              --prerelease --title "FRAME STUDIO Native — test APK" \
+              --notes "სატესტო Android APK. ინსტალაცია პირდაპირ შეიძლება. ეს ჯერ არ არის საბოლოო ვერსია."
+          fi
+          gh release upload native-debug-latest \
+            "native/app/build/outputs/apk/debug/app-debug.apk#FRAME-STUDIO.apk" --clobber
       - name: Record build diagnostics for maintainers
         if: always()
         shell: bash
