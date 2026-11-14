@@ -1,0 +1,42 @@
+Commit: b29c6cc3d267340cccebc8d34b3d906b3790acb6
+Compile step: success
+Publish step: success
+Run: https://github.com/teslamap/frame-studio/actions/runs/43592486754
+Direct APK: https://github.com/teslamap/frame-studio/releases/download/native-debug-latest/FRAME-STUDIO.apk
+BUILD SUCCESSFUL in 22s
+--- Last 35 lines ---
+> Task :app:mergeDebugAssets
+> Task :app:compressDebugAssets
+> Task :app:desugarDebugFileDependencies
+> Task :app:mergeDebugJniLibFolders
+> Task :app:checkDebugDuplicateClasses
+> Task :app:mergeDebugNativeLibs
+> Task :app:processDebugManifestForPackage
+> Task :app:mergeLibDexDebug
+
+> Task :app:stripDebugDebugSymbols
+Unable to strip the following libraries, packaging them as they are: libandroidx.graphics.path.so.
+
+> Task :app:processDebugResources
+> Task :app:validateSigningDebug
+> Task :app:writeDebugAppMetadata
+> Task :app:writeDebugSigningConfigVersions
+> Task :app:mergeExtDexDebug
+
+> Task :app:compileDebugKotlin
+w: file:///home/runner/work/frame-studio/frame-studio/native/app/src/main/java/ge/garantigroup/framestudio/MainActivity.kt:43:16 'var statusBarColor: Int' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/frame-studio/frame-studio/native/app/src/main/java/ge/garantigroup/framestudio/MainActivity.kt:44:16 'var navigationBarColor: Int' is deprecated. Deprecated in Java.
+
+> Task :app:compileDebugJavaWithJavac NO-SOURCE
+> Task :app:dexBuilderDebug
+> Task :app:mergeDebugGlobalSynthetics
+> Task :app:processDebugJavaRes
+> Task :app:mergeProjectDexDebug
+> Task :app:mergeDebugJavaResource
+> Task :app:packageDebug
+> Task :app:createDebugApkListingFileRedirect
+> Task :app:assembleDebug
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/compile-1794657504307.json
+
+BUILD SUCCESSFUL in 22s
+35 actionable tasks: 35 executed
