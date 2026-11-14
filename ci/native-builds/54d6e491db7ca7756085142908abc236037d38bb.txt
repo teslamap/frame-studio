@@ -1,0 +1,39 @@
+Commit: 54d6e491db7ca7756085142908abc236037d38bb
+Compile step: success
+BUILD SUCCESSFUL in 23s
+--- Last 35 lines ---
+> Task :app:mergeDebugAssets
+> Task :app:compressDebugAssets
+> Task :app:desugarDebugFileDependencies
+> Task :app:mergeDebugJniLibFolders
+> Task :app:processDebugManifestForPackage
+> Task :app:checkDebugDuplicateClasses
+> Task :app:mergeLibDexDebug
+> Task :app:mergeDebugNativeLibs
+> Task :app:processDebugResources
+> Task :app:validateSigningDebug
+> Task :app:writeDebugAppMetadata
+
+> Task :app:stripDebugDebugSymbols
+Unable to strip the following libraries, packaging them as they are: libandroidx.graphics.path.so.
+
+> Task :app:writeDebugSigningConfigVersions
+> Task :app:mergeExtDexDebug
+
+> Task :app:compileDebugKotlin
+w: file:///home/runner/work/frame-studio/frame-studio/native/app/src/main/java/ge/garantigroup/framestudio/MainActivity.kt:43:16 'var statusBarColor: Int' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/frame-studio/frame-studio/native/app/src/main/java/ge/garantigroup/framestudio/MainActivity.kt:44:16 'var navigationBarColor: Int' is deprecated. Deprecated in Java.
+
+> Task :app:compileDebugJavaWithJavac NO-SOURCE
+> Task :app:dexBuilderDebug
+> Task :app:mergeDebugGlobalSynthetics
+> Task :app:processDebugJavaRes
+> Task :app:mergeProjectDexDebug
+> Task :app:mergeDebugJavaResource
+> Task :app:packageDebug
+> Task :app:createDebugApkListingFileRedirect
+> Task :app:assembleDebug
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/compile-1794657467436.json
+
+BUILD SUCCESSFUL in 23s
+35 actionable tasks: 35 executed
