@@ -1,0 +1,40 @@
+Commit: aa6aeac40fd9e1d8eecd831854a5fe1c3a081ea6
+Compile step: success
+e: The daemon has terminated unexpectedly on startup attempt #1 with error code: 0. The daemon process output:
+BUILD SUCCESSFUL in 28s
+--- Last 35 lines ---
+> Task :app:checkDebugDuplicateClasses
+> Task :app:mergeDebugNativeLibs
+> Task :app:processDebugResources
+> Task :app:mergeLibDexDebug
+
+> Task :app:stripDebugDebugSymbols
+Unable to strip the following libraries, packaging them as they are: libandroidx.graphics.path.so.
+
+> Task :app:validateSigningDebug
+> Task :app:writeDebugAppMetadata
+> Task :app:writeDebugSigningConfigVersions
+
+> Task :app:compileDebugKotlin
+e: The daemon has terminated unexpectedly on startup attempt #1 with error code: 0. The daemon process output:
+    1. Kotlin compile daemon is ready
+
+> Task :app:mergeExtDexDebug
+
+> Task :app:compileDebugKotlin
+w: file:///home/runner/work/frame-studio/frame-studio/native/app/src/main/java/ge/garantigroup/framestudio/MainActivity.kt:43:16 'var statusBarColor: Int' is deprecated. Deprecated in Java.
+w: file:///home/runner/work/frame-studio/frame-studio/native/app/src/main/java/ge/garantigroup/framestudio/MainActivity.kt:44:16 'var navigationBarColor: Int' is deprecated. Deprecated in Java.
+
+> Task :app:compileDebugJavaWithJavac NO-SOURCE
+> Task :app:dexBuilderDebug
+> Task :app:mergeDebugGlobalSynthetics
+> Task :app:processDebugJavaRes
+> Task :app:mergeProjectDexDebug
+> Task :app:mergeDebugJavaResource
+> Task :app:packageDebug
+> Task :app:createDebugApkListingFileRedirect
+> Task :app:assembleDebug
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/compile-1794657396678.json
+
+BUILD SUCCESSFUL in 28s
+35 actionable tasks: 35 executed
