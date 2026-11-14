@@ -250,3 +250,63 @@ object OrderStore {
         )
     }
 }
+
+
+data class ImpostBoundary(
+    val axis: String, val pos: Double, val lo: Double, val hi: Double
+)
+data class ImpostMove(val construction: FrameConstruction, val position: Double)
+
+fun impostBoundaries(s: FrameConstruction): List<ImpostBoundary> {
+    val result=mutableListOf<ImpostBoundary>()
+    val e=0.000001
+    for(i in s.cells.indices) for(j in i+1 until s.cells.size) {
+        val a=s.cells[i]
+        val b=s.cells[j]
+        if(abs(a.x+a.w-b.x)<e || abs(b.x+b.w-a.x)<e) {
+            val pos=if(abs(a.x+a.w-b.x)<e) a.x+a.w else b.x+b.w
+            val lo=max(a.y,b.y)
+            val hi=min(a.y+a.h,b.y+b.h)
+            if(hi-lo>e)result+=ImpostBoundary("vertical",pos,lo,hi)
+        }
+        if(abs(a.y+a.h-b.y)<e || abs(b.y+b.h-a.y)<e) {
+            val pos=if(abs(a.y+a.h-b.y)<e) a.y+a.h else b.y+b.h
+            val lo=max(a.x,b.x)
+            val hi=min(a.x+a.w,b.x+b.w)
+            if(hi-lo>e)result+=ImpostBoundary("horizontal",pos,lo,hi)
+        }
+    }
+    return result
+}
+fun moveImpost(s: FrameConstruction, d: ImpostBoundary, requested: Double): ImpostMove? {
+    val total=if(d.axis=="vertical")s.width.toDouble() else s.height.toDouble()
+    val minimum=100.0/total
+    val axis=if(d.axis=="vertical") "x" else "y"
+    val left=mutableListOf<FrameCell>()
+    val right=mutableListOf<FrameCell>()
+    for(c in s.cells) {
+        val otherStart=if(axis=="x") c.y else c.x
+        val otherEnd=otherStart+(if(axis=="x")c.h else c.w)
+        if(min(otherEnd,d.hi)-max(otherStart,d.lo)<=0.00001)continue
+        val start=if(axis=="x") c.x else c.y
+        val end=start+(if(axis=="x")c.w else c.h)
+        if(abs(end-d.pos)<0.00001)left+=c
+        if(abs(start-d.pos)<0.00001)right+=c
+    }
+    if(left.isEmpty()||right.isEmpty())return null
+    val low=left.maxOf { if(axis=="x")it.x+minimum else it.y+minimum }
+    val high=right.minOf { if(axis=="x")it.x+it.w-minimum else it.y+it.h-minimum }
+    if(low>high)return null
+    val actual=requested.coerceIn(low,high)
+    val delta=actual-d.pos
+    val l=left.map { it.id }.toSet()
+    val r=right.map { it.id }.toSet()
+    return ImpostMove(s.copy(cells=s.cells.map { c ->
+        when(c.id) {
+            in l -> if(axis=="x") c.copy(w=c.w+delta) else c.copy(h=c.h+delta)
+            in r -> if(axis=="x") c.copy(x=c.x+delta,w=c.w-delta)
+                    else c.copy(y=c.y+delta,h=c.h-delta)
+            else -> c
+        }
+    }),actual)
+}
