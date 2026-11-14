@@ -151,9 +151,8 @@ private fun FrameStudioScreen() {
                     Spacer(Modifier.height(14.dp))
                     StudioPanel("კონსტრუქცია") {
                         StudioSelect("კონსტრუქციის ტიპი",frame.kind,
-                            listOf("ფანჯარა","კარი","ვიტრაჟი","სხვა")) { v ->
-                            changeFrame({it.copy(kind=v)})
-                        }
+                            listOf("ფანჯარა","კარი","ვიტრაჟი","სხვა"),
+                            onChange={ v -> changeFrame({ it.copy(kind=v) }) })
                         StudioSelect("პროფილი / სისტემა",frame.profile,profileNames,
                             {v->changeFrame({it.copy(profile=v)})},"აირჩიე პროფილი / სისტემა")
                         Row(horizontalArrangement=Arrangement.spacedBy(10.dp)) {
