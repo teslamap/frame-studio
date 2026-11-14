@@ -1,0 +1,46 @@
+Commit: 6a940c7b69be1597c8eb6099b389fc5f2db3d1c2
+Compile step: failure
+> Task :app:compileDebugKotlin FAILED
+e: file:///home/runner/work/frame-studio/frame-studio/native/app/src/main/java/ge/garantigroup/framestudio/MainActivity.kt:154:29 No value passed for parameter 'onChange'.
+e: file:///home/runner/work/frame-studio/frame-studio/native/app/src/main/java/ge/garantigroup/framestudio/MainActivity.kt:154:72 Argument type mismatch: actual type is 'kotlin.Function1<ERROR CLASS: Unknown return lambda parameter type, ERROR CLASS: Unknown return lambda parameter type>', but 'kotlin.String' was expected.
+e: file:///home/runner/work/frame-studio/frame-studio/native/app/src/main/java/ge/garantigroup/framestudio/MainActivity.kt:154:74 Cannot infer type for this parameter. Please specify it explicitly.
+FAILURE: Build failed with an exception.
+* What went wrong:
+Execution failed for task ':app:compileDebugKotlin'.
+BUILD FAILED in 22s
+--- Last 35 lines ---
+> Task :app:mergeDebugJniLibFolders
+> Task :app:checkDebugDuplicateClasses
+> Task :app:processDebugResources
+> Task :app:mergeDebugNativeLibs
+> Task :app:mergeLibDexDebug
+
+> Task :app:stripDebugDebugSymbols
+Unable to strip the following libraries, packaging them as they are: libandroidx.graphics.path.so.
+
+> Task :app:validateSigningDebug
+> Task :app:writeDebugAppMetadata
+> Task :app:writeDebugSigningConfigVersions
+> Task :app:mergeExtDexDebug
+
+> Task :app:compileDebugKotlin FAILED
+e: file:///home/runner/work/frame-studio/frame-studio/native/app/src/main/java/ge/garantigroup/framestudio/MainActivity.kt:154:29 No value passed for parameter 'onChange'.
+e: file:///home/runner/work/frame-studio/frame-studio/native/app/src/main/java/ge/garantigroup/framestudio/MainActivity.kt:154:72 Argument type mismatch: actual type is 'kotlin.Function1<ERROR CLASS: Unknown return lambda parameter type, ERROR CLASS: Unknown return lambda parameter type>', but 'kotlin.String' was expected.
+e: file:///home/runner/work/frame-studio/frame-studio/native/app/src/main/java/ge/garantigroup/framestudio/MainActivity.kt:154:74 Cannot infer type for this parameter. Please specify it explicitly.
+gradle/actions: Writing build results to /home/runner/work/_temp/.gradle-actions/build-results/compile-1794657349705.json
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:compileDebugKotlin'.
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
+   > Compilation error. See log for more details
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 22s
+28 actionable tasks: 28 executed
